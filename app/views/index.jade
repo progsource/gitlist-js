@@ -1,12 +1,12 @@
 extend layout
 block content
-  p
-    #{repos}
-  each val in repos
-    .panel.panel-default
+  each val, index in repos
+    .panel.panel-primary
       .panel-heading
         h3.panel-title
           span.glyphicon.glyphicon-folder-open
-          a(href='/' + val)= val
+          = ' '
+          a(href='/' + index)
+            strong= index
       .panel-body
-         "This is a description"
+         = val

@@ -7,7 +7,7 @@ app.set('view engine', 'jade');
 
 
 app.get('/', function(req, res) {
-    var repositories = [];
+    var repositories = {};
     var dir = 'C:/repo_git';
     var folderInDir = fs.readdirSync(dir);
     
@@ -15,7 +15,8 @@ app.get('/', function(req, res) {
         var stats = fs.statSync(dir + '/' + currentDir);
 
 	if (stats && stats.isDirectory()) {
-	    repositories[repositories.length] = currentDir;
+            var descr = fs.readFileSync(dir + '/' + currentDir + '/description');
+	    repositories[currentDir] = descr;
 	}
     });
 
