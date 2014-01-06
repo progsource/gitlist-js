@@ -1,4 +1,7 @@
 extend layout
 block content
   p
-    | List of all available Git repositories
+    #{repos}
+  ul
+    each val in repos
+      li= val

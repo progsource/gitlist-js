@@ -1,0 +1,21 @@
+{
+  "name": "gitlist-js",
+  "version": "0.0.1",
+  "description": "A Node.js port of GitList",
+  "main": "app.js",
+  "keywords": [
+    "Node.js",
+    "express",
+    "jade",
+    "git"
+  ],
+  "authors": [
+    "M. Petra Baranski"
+  ],
+  "license": "MIT",
+  "homepage": "http://progsource.de/gitlist-js",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "*"
+  }
+}

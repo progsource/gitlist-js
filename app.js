@@ -9,10 +9,23 @@ app.set('view engine', 'jade');
 app.get('/', function(req, res) {
     var repositories = [];
     var dir = 'C:/repo_git';
-
+    var folderInDir = fs.readdirSync(dir);
     
-console.log(repositories);
-    res.render('index', { title: 'repository list'});
+    folderInDir.forEach(function(currentDir) {
+        var stats = fs.statSync(dir + '/' + currentDir);
+
+	if (stats && stats.isDirectory()) {
+	    repositories[repositories.length] = currentDir;
+	}
+    });
+    console.log(repositories);
+    res.render(
+        'index',
+	{
+	    title: 'repository list',
+	    repos: repositories
+	}
+    );
 });
 
 app.use(express.static(__dirname + '/app/public'));
