@@ -2,11 +2,14 @@ doctype html
 html(lang='en')
   head
     title #{title} - GitList.js
-    link(rel='stylesheet', href='style/base.css')
+    link(rel='stylesheet', href='/scripts/vendor/bootstrap/dist/css/bootstrap.min.css')
   body
-    header
-      h1 GitList.js
+    .navbar.navbar-scroll-top.navbar-inverse
+      .navbar-inner
+        .container
+          a(class='navbar-brand', href='/')= "GitList.js"
     .container
       block content
     footer
-      p Running on Node.js with Express and Jade
+      .container
+        p Running on Node.js with Express and Jade

@@ -2,6 +2,11 @@ extend layout
 block content
   p
     #{repos}
-  ul
-    each val in repos
-      li= val
+  each val in repos
+    .panel.panel-default
+      .panel-heading
+        h3.panel-title
+          span.glyphicon.glyphicon-folder-open
+          a(href='/' + val)= val
+      .panel-body
+         "This is a description"
