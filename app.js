@@ -18,7 +18,7 @@ app.get('/', function(req, res) {
 	    repositories[repositories.length] = currentDir;
 	}
     });
-    console.log(repositories);
+
     res.render(
         'index',
 	{
