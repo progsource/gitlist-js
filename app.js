@@ -1,10 +1,13 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+var gitrepo = require('./app/modules/GitRepo.js');
+var GitRepo = new gitrepo();
 
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
 
+var gitRepoDir = 'C:/repo_git';
 
 app.get('/', function(req, res) {
     var repositories = {};
@@ -25,6 +28,49 @@ app.get('/', function(req, res) {
 	{
 	    title: 'repository list',
 	    repos: repositories
+	}
+    );
+});
+
+app.get('/:reponame', function(req, res) {
+    var reponame = req.params.reponame;
+
+    GitRepo.setBasePath(gitRepoDir);
+    GitRepo.setCurrentReponame(reponame);
+    GitRepo.init();
+    var branches = GitRepo.getBranches();
+    var branch = GitRepo.getCurrentBranch();
+
+    res.render(
+        'folderView',
+	{
+	    title: reponame,
+	    reponame: reponame,
+	    heads: branches.heads,
+	    tags: branches.tags,
+	    branch: branch
+	}
+    );
+});
+
+app.get('/:reponame/:branch', function(req, res) {
+    var reponame = req.params.reponame;
+    var branch = req.params.branch;
+
+    GitRepo.setBasePath(gitRepoDir);
+    GitRepo.setCurrentReponame(reponame);
+    GitRepo.init();
+    var branches = GitRepo.getBranches();
+    GitRepo.setCurrentBranch(branch);
+
+    res.render(
+        'folderView',
+	{
+	    title: reponame,
+	    reponame: reponame,
+	    heads: branches.heads,
+	    tags: branches.tags,
+	    branch: branch
 	}
     );
 });
