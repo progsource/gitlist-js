@@ -75,6 +75,16 @@ app.get('/:reponame/:branch', function(req, res) {
     );
 });
 
+app.get('/:reponame/commits/:branch', function(req, res) {
+    res.render(
+        'index',
+	{
+	    title: 'blub',
+	    repositories: []
+	}
+    );
+});
+
 app.use(express.static(__dirname + '/app/public'));
 
 app.listen(8080);
