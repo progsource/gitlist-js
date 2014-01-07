@@ -1,0 +1,16 @@
+# EditorConfig: http://EditorConfig.org
+
+root = true
+
+[*]
+end_of_line = lf
+insert_final_line = true
+charset = utf-8
+
+[*.js]
+indent_style = space
+indent_size = 4
+
+[*.jade]
+indent_style = space
+indent_size = 2
