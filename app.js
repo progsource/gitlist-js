@@ -62,7 +62,7 @@ app.get('/:reponame/:branch', function(req, res) {
     GitRepo.init();
     var branches = GitRepo.getBranches();
     GitRepo.setCurrentBranch(branch);
-
+GitRepo.getDirectoryContents();
     res.render(
         'folderView',
 	{
