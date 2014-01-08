@@ -6,6 +6,6 @@
   "dependencies": {
     "express": "3.x",
     "jade": "*",
-    "git-history": "0.0.2"
+    "comandante": "0.0.1"
   }
 }
