@@ -6,6 +6,7 @@
   "dependencies": {
     "express": "3.x",
     "jade": "*",
-    "comandante": "0.0.1"
+    "comandante": "0.0.1",
+    "bluebird": "~1.0.0"
   }
 }
