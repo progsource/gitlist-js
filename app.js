@@ -3,6 +3,9 @@ var app = express();
 var fs = require('fs');
 var gitrepo = require('./app/modules/GitRepo.js');
 var GitRepo = new gitrepo();
+var GitData = require('./app/modules/GitData.js');
+var gitdata = new GitData();
+var Promise = require('bluebird');
 
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
@@ -22,7 +25,10 @@ app.get('/', function(req, res) {
 	    repositories[currentDir] = descr;
 	}
     });
-
+    var testing = function(data) {
+	console.log(data);
+    };
+    var test = gitdata.test(gitRepoDir + '/gitlist-js.git', 'dev', testing);
     res.render(
         'index',
 	{
@@ -31,16 +37,22 @@ app.get('/', function(req, res) {
 	}
     );
 });
+app.use(express.static(__dirname + '/app/public'));
 
 app.get('/:reponame', function(req, res) {
     var reponame = req.params.reponame;
+
+    if (!fs.existsSync(gitRepoDir + '/' + reponame)) {
+	res.send(404, 'File/Dir not exists');
+	return;
+    }
 
     GitRepo.setBasePath(gitRepoDir);
     GitRepo.setCurrentReponame(reponame);
     GitRepo.init();
     var branches = GitRepo.getBranches();
     var branch = GitRepo.getCurrentBranch();
-
+var renderIt = function(data) {
     res.render(
         'folderView',
 	{
@@ -48,9 +60,12 @@ app.get('/:reponame', function(req, res) {
 	    reponame: reponame,
 	    heads: branches.heads,
 	    tags: branches.tags,
-	    branch: branch
+	    branch: branch,
+	    directoryContents: data
 	}
     );
+};
+gitdata.test(gitRepoDir + '/' + reponame, branch, renderIt);
 });
 
 app.get('/:reponame/:branch', function(req, res) {
@@ -62,17 +77,20 @@ app.get('/:reponame/:branch', function(req, res) {
     GitRepo.init();
     var branches = GitRepo.getBranches();
     GitRepo.setCurrentBranch(branch);
-GitRepo.getDirectoryContents();
-    res.render(
+//GitRepo.getDirectoryContents();
+var renderIt = function(data) {    res.render(
         'folderView',
 	{
 	    title: reponame,
 	    reponame: reponame,
 	    heads: branches.heads,
 	    tags: branches.tags,
-	    branch: branch
+	    branch: branch,
+    	    directoryContents: data
 	}
     );
+};
+gitdata.test(gitRepoDir + '/' + reponame, branch, renderIt);
 });
 
 app.get('/:reponame/commits/:branch', function(req, res) {
@@ -85,7 +103,6 @@ app.get('/:reponame/commits/:branch', function(req, res) {
     );
 });
 
-app.use(express.static(__dirname + '/app/public'));
 
 app.listen(8080);
 console.log('listen to port 8080');

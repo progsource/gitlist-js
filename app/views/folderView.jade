@@ -24,3 +24,15 @@ block content
           a(href='/' + reponame + '/' + branch)= 'Files'
         li
           a(href='/' + reponame + '/commits/' + branch)= 'Commits'
+  table.table.table-hover
+    thead
+      tr
+        th(width="80%")='name'
+        th(width="10%")='mode'
+        th(width="10%")='size'
+    tbody
+      each val, index in directoryContents
+        tr
+          td=index
+          td=''
+          td=val.fileSize
