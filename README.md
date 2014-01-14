@@ -4,13 +4,15 @@ A GitList clone written in Node,js
 
 ## Requirements
 
+* Git
 * Node.js
 
 ## Installation
 
 1. clone the repository
 2. npm install
-3. node app.js
+3. configure the basePath in /app/configs/repos.json
+4. node app.js
 
 ## License
 
