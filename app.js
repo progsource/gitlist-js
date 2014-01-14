@@ -25,10 +25,7 @@ app.get('/', function(req, res) {
 	    repositories[currentDir] = descr;
 	}
     });
-    var testing = function(data) {
-	console.log(data);
-    };
-    var test = gitdata.test(gitRepoDir + '/gitlist-js.git', 'dev', testing);
+
     res.render(
         'index',
 	{
