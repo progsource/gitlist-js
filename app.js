@@ -119,6 +119,31 @@ app.get('/:reponame/tree/:branch/:dir', function(req, res) {
     gitdata.getFolder(gitRepoDir + '/' + reponame, branch, dir, renderIt);
 });
 
+app.get('/:reponame/blob/:branch/:file', function(req, res) {
+    var reponame = req.params.reponame;
+    var branch = req.params.branch;
+    var file = unescape(req.params.file);
+
+    GitRepo.setCurrentReponame(reponame);
+    GitRepo.init();
+    var branches = GitRepo.getBranches();
+    GitRepo.setCurrentBranch(branch);
+
+    var renderIt = function(data) {
+	res.render(
+	    'fileView',
+	    {
+		title: reponame,
+		reponame: reponame,
+		heads: branches.heads,
+		tags: branches.tags,
+		fileContent: data.content,
+		breadcrumb: data.breadcrumb
+	    }
+	);
+    };
+});
+
 app.get('/:reponame/commits/:branch', function(req, res) {
     res.render(
         'index',

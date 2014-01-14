@@ -2,7 +2,6 @@
  *
  */
 var Promise = require('bluebird');
-var run = Promise.promisify(require('child_process').spawn);
 
 var GitData = function() {
     var breadcrumb = {};

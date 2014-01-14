@@ -47,6 +47,6 @@ block content
             else
               span.glyphicon.glyphicon-file
               = ' '
-              a(href='#')= val.contentName
+              a(href='/' + reponame + '/blob/' + branch + '/' + index.replace(/\//g, '%2F'))= val.contentName
           td=val.mode
           td=val.fileSize
