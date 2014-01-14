@@ -58,7 +58,8 @@ app.get('/:reponame', function(req, res) {
 	        heads: branches.heads,
                 tags: branches.tags,
 	        branch: branch,
-                directoryContents: data
+                directoryContents: data.folder,
+		breadcrumb: data.breadcrumb
 	    }
         );
     };
