@@ -43,7 +43,22 @@ function GitRepo() {
 	return branches;
     };
 
+    var initConfiguration = function() {
+	var configFile = './app/configs/repos.json';
+        try {
+	    var config = JSON.parse(fs.readFileSync(configFile, {encode: 'utf-8'}));
+	    if (!fs.existsSync(config.basePath)) {
+		throw 'config base path does not exists';
+		return;
+            }
+	    basePath = config.basePath;
+	} catch(e) {
+	    console.error('config file could not be read: ' + e);
+	}
+    };
+
     this.init = function() {
+	initConfiguration();
         if (0 == basePath.length) {
 	    console.error('basePath has to be set before initialization');
 	}

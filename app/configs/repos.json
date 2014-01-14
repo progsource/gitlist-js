@@ -1,5 +1,3 @@
 {
-    "paths": [
-        "file:///c:/repo_git"
-    ]
+    "basePath": "C:/repo_git"
 }

@@ -40,54 +40,54 @@ app.get('/:reponame', function(req, res) {
     var reponame = req.params.reponame;
 
     if (!fs.existsSync(gitRepoDir + '/' + reponame)) {
-	res.send(404, 'File/Dir not exists');
+	res.send(404, 'File/Dir not found');
 	return;
     }
 
-    GitRepo.setBasePath(gitRepoDir);
     GitRepo.setCurrentReponame(reponame);
     GitRepo.init();
     var branches = GitRepo.getBranches();
     var branch = GitRepo.getCurrentBranch();
-var renderIt = function(data) {
-    res.render(
-        'folderView',
-	{
-	    title: reponame,
-	    reponame: reponame,
-	    heads: branches.heads,
-	    tags: branches.tags,
-	    branch: branch,
-	    directoryContents: data
-	}
-    );
-};
-gitdata.getFolder(gitRepoDir + '/' + reponame, branch, renderIt);
+    
+    var renderIt = function(data) {
+        res.render(
+            'folderView',
+	    {
+	        title: reponame,
+	        reponame: reponame,
+	        heads: branches.heads,
+                tags: branches.tags,
+	        branch: branch,
+                directoryContents: data
+	    }
+        );
+    };
+    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, renderIt);
 });
 
 app.get('/:reponame/:branch', function(req, res) {
     var reponame = req.params.reponame;
     var branch = req.params.branch;
 
-    GitRepo.setBasePath(gitRepoDir);
     GitRepo.setCurrentReponame(reponame);
     GitRepo.init();
     var branches = GitRepo.getBranches();
     GitRepo.setCurrentBranch(branch);
-//GitRepo.getDirectoryContents();
-var renderIt = function(data) {    res.render(
-        'folderView',
-	{
-	    title: reponame,
-	    reponame: reponame,
-	    heads: branches.heads,
-	    tags: branches.tags,
-	    branch: branch,
-    	    directoryContents: data
-	}
-    );
-};
-gitdata.getFolder(gitRepoDir + '/' + reponame, branch, renderIt);
+    
+    var renderIt = function(data) {
+	res.render(
+            'folderView',
+	    {
+	        title: reponame,
+	        reponame: reponame,
+                heads: branches.heads,
+	        tags: branches.tags,
+	        branch: branch,
+    	        directoryContents: data
+	    }
+        );
+    };
+    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, renderIt);
 });
 
 app.get('/:reponame/commits/:branch', function(req, res) {
