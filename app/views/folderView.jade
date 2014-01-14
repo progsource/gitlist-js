@@ -24,6 +24,12 @@ block content
           a(href='/' + reponame + '/' + branch)= 'Files'
         li
           a(href='/' + reponame + '/commits/' + branch)= 'Commits'
+  ol.breadcrumb
+    li
+      a(href='/' + reponame + '/' + branch)= reponame
+    each val, index in breadcrumb
+      li
+        a(href='/' + reponame + '/tree/' + branch + '/' + val + '%2F')= val 
   table.table.table-hover
     thead
       tr

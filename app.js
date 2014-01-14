@@ -83,7 +83,8 @@ app.get('/:reponame/:branch', function(req, res) {
                 heads: branches.heads,
 	        tags: branches.tags,
 	        branch: branch,
-    	        directoryContents: data
+    	        directoryContents: data.folder,
+		breadcrumb: data.breadcrumb
 	    }
         );
     };
@@ -109,7 +110,8 @@ app.get('/:reponame/tree/:branch/:dir', function(req, res) {
 		heads: branches.heads,
 		tags: branches.tags,
 		branch: branch,
-		directoryContents: data
+		directoryContents: data.folder,
+		breadcrumb: data.breadcrumb
 	    }
 	);
     };
