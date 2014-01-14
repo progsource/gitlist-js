@@ -9,10 +9,13 @@ var GitData = function() {
 	var key = line.split('\t')[1];
 	if ('undefined' !== typeof key) {
 	    var contents = line.split('\t')[0].split(' ');
+	    var contentName = key.split('/');
+	    contentName = contentName[contentName.length - 1];
 	    folderObject[key] = {
 		mode: contents[0],
 		contentType: contents[1],
-		fileSize: contents[contents.length - 1]
+		fileSize: contents[contents.length - 1],
+		contentName: contentName
 	    };
 	}
 	return folderObject;
@@ -27,10 +30,10 @@ var GitData = function() {
 	return folder;
     };
 
-    this.getFolder = function(path, branch, callback) {
+    this.getFolder = function(path, branch, deepPath, callback) {
 	var spawn = require('child_process').spawn;
 	var prom = new Promise(function(resolve, reject) {
-	    var gitTree = spawn('git', ['ls-tree', branch, '-l'], {cwd: path});
+	    var gitTree = spawn('git', ['ls-tree', branch, '-l', 'paths', deepPath], {cwd: path});
 	    gitTree.stdout.on('data', resolve);
 	    gitTree.stderr.on('data', reject);
 	})

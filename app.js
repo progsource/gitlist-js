@@ -62,7 +62,7 @@ app.get('/:reponame', function(req, res) {
 	    }
         );
     };
-    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, renderIt);
+    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, '.', renderIt);
 });
 
 app.get('/:reponame/:branch', function(req, res) {
@@ -87,7 +87,33 @@ app.get('/:reponame/:branch', function(req, res) {
 	    }
         );
     };
-    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, renderIt);
+    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, '.', renderIt);
+});
+
+app.get('/:reponame/tree/:branch/:dir', function(req, res) {
+    var reponame = req.params.reponame;
+    var branch = req.params.branch;
+    var dir = unescape(req.params.dir);
+
+    GitRepo.setCurrentReponame(reponame);
+    GitRepo.init();
+    var branches = GitRepo.getBranches();
+    GitRepo.setCurrentBranch(branch);
+
+    var renderIt = function(data) {
+        res.render(
+	    'folderView',
+	    {
+		title: reponame,
+		reponame: reponame,
+		heads: branches.heads,
+		tags: branches.tags,
+		branch: branch,
+		directoryContents: data
+	    }
+	);
+    };
+    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, dir, renderIt);
 });
 
 app.get('/:reponame/commits/:branch', function(req, res) {
