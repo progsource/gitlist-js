@@ -62,7 +62,7 @@ var renderIt = function(data) {
 	}
     );
 };
-gitdata.test(gitRepoDir + '/' + reponame, branch, renderIt);
+gitdata.getFolder(gitRepoDir + '/' + reponame, branch, renderIt);
 });
 
 app.get('/:reponame/:branch', function(req, res) {
@@ -87,7 +87,7 @@ var renderIt = function(data) {    res.render(
 	}
     );
 };
-gitdata.test(gitRepoDir + '/' + reponame, branch, renderIt);
+gitdata.getFolder(gitRepoDir + '/' + reponame, branch, renderIt);
 });
 
 app.get('/:reponame/commits/:branch', function(req, res) {
