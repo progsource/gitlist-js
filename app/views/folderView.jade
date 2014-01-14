@@ -7,7 +7,7 @@ block content
       .btn-group.pull-left
         button.btn.btn-default.dropdown-toggle(data-toggle='dropdown')
           = 'browsing: '
-          strong= branch
+          strong= branch + ' '
           span.caret
         ul.dropdown-menu
           li.dropdown-header= 'Branches'
@@ -33,6 +33,12 @@ block content
     tbody
       each val, index in directoryContents
         tr
-          td=index
-          td=''
+          td
+            if (val.contentType != 'blob')
+              span.glyphicon.glyphicon-folder-open
+            else
+              span.glyphicon.glyphicon-file
+            = ' '
+            a(href='#')=index
+          td=val.mode
           td=val.fileSize
