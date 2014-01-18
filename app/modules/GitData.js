@@ -46,6 +46,17 @@ var GitData = function() {
 
 	    breadcrumb = deepPath.split('/');
 	    breadcrumb.splice(breadcrumb.length - 1, 1);
+	    var breads = {};
+	    breadcrumb.forEach(function(bread, index) {
+		breads[bread] = '';
+		if (breadcrumb.length - 1 != index) {
+		    var i = 0;
+	            for (;i <= index; i++) {
+			breads[bread] += breadcrumb[i] + '%2F';
+                    }
+		}
+	    });
+	    breadcrumb = breads;
 	})
 	    .then(gitTreeStringToObject)
 	    .then(callback);
