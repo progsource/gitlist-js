@@ -15,11 +15,21 @@ var GitFile = function() {
 		var content = data;
 
 		var breadcrumb = file.split('/');
-		breadcrumb.splice(breadcrumb.length - 1, 1);
+
+		var breads = {};
+		breadcrumb.forEach(function(bread, index) {
+		    breads[bread] = '';
+		    var i = 0;
+		    if (breadcrumb.length - 1 != index) {
+		        for (;i <= index; i++) {
+			    breads[bread] += breadcrumb[i] + '%2F';
+		        }
+		    }
+		});
 
 		return {
 		    content: content,
-		    breadcrumb: breadcrumb
+		    breadcrumb: breads
 		};
 	    })
 	    .then(callback);

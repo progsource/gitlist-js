@@ -29,4 +29,7 @@ block content
       a(href='/' + reponame + '/' + branch)= reponame
     each val, index in breadcrumb
       li
-        a(href='/' + reponame + '/tree/' + branch + '/' + val + '%2F')= val
+        if (0 == val.length)
+          = index
+        else
+          a(href='/' + reponame + '/tree/' + branch + '/' + val)= index
