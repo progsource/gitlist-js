@@ -1,0 +1,32 @@
+extend layout
+block content
+  .row
+   .col-md-12
+      form(class='form-search pull-right', action=reponame + '/tree/' + branch + '/search', method='POST')
+        input(type='search', name='query', class='form-control', placeholder='Search tree &hellip;')
+      .btn-group.pull-left
+        button.btn.btn-default.dropdown-toggle(data-toggle='dropdown')
+          = 'browsing: '
+          strong= branch + ' '
+          span.caret
+        ul.dropdown-menu
+          li.dropdown-header= 'Branches'
+          each val in heads
+            li
+              a(href='/' + reponame + '/' + val)= val
+          li.divider
+          li.dropdown-header= 'Tags'
+          each val in tags
+            li
+              a(href='/' + reponame + '/' + val)= val
+      ul.nav.nav-tabs
+        li.active
+          a(href='/' + reponame + '/' + branch)= 'Files'
+        li
+          a(href='/' + reponame + '/commits/' + branch)= 'Commits'
+  ol.breadcrumb
+    li
+      a(href='/' + reponame + '/' + branch)= reponame
+    each val, index in breadcrumb
+      li
+        a(href='/' + reponame + '/tree/' + branch + '/' + val + '%2F')= val

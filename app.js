@@ -124,6 +124,9 @@ app.get('/:reponame/blob/:branch/:file', function(req, res) {
     var branch = req.params.branch;
     var file = unescape(req.params.file);
 
+    var GitFile = require('./app/modules/GitFile.js');
+    var gitFile = new GitFile();
+
     GitRepo.setCurrentReponame(reponame);
     GitRepo.init();
     var branches = GitRepo.getBranches();
@@ -137,11 +140,14 @@ app.get('/:reponame/blob/:branch/:file', function(req, res) {
 		reponame: reponame,
 		heads: branches.heads,
 		tags: branches.tags,
+		branch: branch,
 		fileContent: data.content,
 		breadcrumb: data.breadcrumb
 	    }
 	);
     };
+
+    gitFile.getFile(gitRepoDir + '/' + reponame, branch, file, renderIt);
 });
 
 app.get('/:reponame/commits/:branch', function(req, res) {
