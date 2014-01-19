@@ -1,37 +1,29 @@
 /**
  * GitLog
  */
-var Promise = require('bluebird');
-
 var GitLog = function() {
-    this.getLog = function(path, branch, callback) {
-	var prom = new Promise(function(resolve, reject) {
-	    var spawn = require('child_process').spawn;
-	    var gitLog = spawn('git', ['log', '--first-parent', branch], {cwd: path});
-	    gitLog.stdout.on('data', resolve);
-	    gitLog.stderr.on('data', reject);
-	})
-	    .then(function(data) {
-		var commits = {};
-		var history = data.toString('utf-8').split('\n');
-		commits[history[0].substr(7)] = {
-		    author: history[1].substr(8),
-		    date: history[2].substr(8),
-		    msg: history[4].substr(4)
-		};
-		console.log(commits);
-		console.log(history.length);
-		return commits;
-            })
-	    .then(function(data) {
-		var breadcrumb = {'Commit history': ''};
+    var commits = {};
 
-		return {
-		    commits: data,
-		    breadcrumb: breadcrumb
+    var commitStringToObject = function(data) {
+	var history = data.toString('utf-8').split('\n');
+	history.forEach(function(logLine, index) {
+	    if ('commit ' == logLine.substr(0, 'commit '.length)) {
+                commits[logLine.substr(7)] = {
+		    author: history[index + 1],
+		    date: history[index + 2],
+		    msg: history[index + 4]
 		};
-	    })
-	    .then(callback);
+	    }
+	});
+    };
+
+    this.getLog = function(path, branch, callback) {
+	var spawn = require('child_process').spawn;
+	var gitLog = spawn('git', ['log', '--first-parent', branch, '-n', 20], {cwd: path});
+	gitLog.stdout.on('data', commitStringToObject);
+	gitLog.on('close', function(code) {
+	    callback({breadcrumb: {'Commit history': ''}, commits: commits});
+	});
     };
 };
 
