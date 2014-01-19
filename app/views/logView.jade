@@ -15,3 +15,12 @@ block append content
                 a(href='mailto:' + com.author.email)
                   = com.author.name
                 = ' authored on ' + com.date
+  ul.pagination
+    - var yp = 1;
+    - for (var x = 0; x < parseInt(commitCount); x += 15)
+      if (page == yp - 1)
+        li.active
+          a(href='/' + reponame + '/commits/' + branch + '/' + (yp - 1))= yp++
+      else
+        li
+          a(href='/' + reponame + '/commits/' + branch + '/' + (yp - 1))= yp++

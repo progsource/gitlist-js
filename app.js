@@ -177,7 +177,7 @@ app.get('/:reponame/blob/:branch/:file', function(req, res) {
     gitFile.getFile(gitRepoDir + '/' + reponame, branch, file, renderIt);
 });
 
-app.get('/:reponame/commits/:branch', function(req, res) {
+function showCommits(req, res, page) {
     init();
     
     var reponame = req.params.reponame;
@@ -202,14 +202,24 @@ app.get('/:reponame/commits/:branch', function(req, res) {
 		branch: branch,
                 breadcrumb: data.breadcrumb,
 		commits: data.commits,
-		activeTab: 'Commits'
+		activeTab: 'Commits',
+		commitCount: data.commitCount,
+		page: page
 	    }
         );
     };
 
-    gitLog.getLog(gitRepoDir + '/' + reponame, branch, renderIt);
+    gitLog.getLog(gitRepoDir + '/' + reponame, branch, page, renderIt);
+}
+
+app.get('/:reponame/commits/:branch', function(req, res) {
+    showCommits(req, res, 0);
 });
 
+app.get('/:reponame/commits/:branch/:page', function(req, res) {
+    var page = req.params.page;
+    showCommits(req, res, page);
+});
 
 app.listen(8080);
 console.log('listen to port 8080');

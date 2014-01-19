@@ -27,12 +27,25 @@ var GitLog = function() {
 	});
     };
 
-    this.getLog = function(path, branch, callback) {
+    this.getLog = function(path, branch, page, callback) {
 	var spawn = require('child_process').spawn;
-	var gitLog = spawn('git', ['log', '--first-parent', branch, '-n', 15], {cwd: path});
+	var commitsToSkip = 0;
+	if (0 < page) {
+	    commitsToSkip = 15 * page;
+	}
+	var gitLog = spawn('git', ['log', '--first-parent', branch, '-n', 15, '--skip=' + commitsToSkip], {cwd: path});
 	gitLog.stdout.on('data', commitStringToObject);
 	gitLog.on('close', function(code) {
-	    callback({breadcrumb: {'Commit history': ''}, commits: commits});
+	    var gitLogCount = spawn('git', ['rev-list', branch, '--count'], {cwd: path});
+	    gitLogCount.stdout.on('data', function(data) {
+		callback(
+		    {
+			breadcrumb: {'Commit history': ''},
+			commits: commits,
+			commitCount: data
+		    }
+		);
+	    });
 	});
     };
 };
