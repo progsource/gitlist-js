@@ -74,16 +74,7 @@ function GitRepo() {
     };
     
     this.getDirectoryContents = function() {
-var run = require('comandante');
 	var revision = fs.readFileSync(basePath + '/' + current.reponame + '/refs/heads/' + current.branch, 'UTF-8');
-	var Writable = require('stream').Writable;
-	var ws = Writable({decodeString: false});
-	var directoryContents = {};
-	ws._write = function(data, enc, next) {
-	    console.log(data.toString());
-	};
-	var directoryContentsStream = run('git', ['ls-tree', current.branch]).pipe(ws);
-
     };
 }
 
