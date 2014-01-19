@@ -221,6 +221,38 @@ app.get('/:reponame/commits/:branch/:page', function(req, res) {
     showCommits(req, res, page);
 });
 
+app.get('/:reponame/commit/:treeish', function(req, res) {
+    init();
+    var reponame = req.params.reponame;
+    var treeish = req.params.treeish;
+
+    GitRepo.setCurrentReponame(reponame);
+    GitRepo.init();
+    var branches = GitRepo.getBranches();
+    var branch = GitRepo.getCurrentBranch();
+
+    var GitFile = require('./app/modules/GitFile.js');
+    var gitFile = new GitFile();
+
+    var renderIt = function(data) {
+        res.render(
+	    'fileView',
+	    {
+		title: reponame,
+		reponame: reponame,
+		heads: branches.heads,
+		tags: branches.tags,
+		breadcrumb: data.breadcrumb,
+		activeTab: 'Commits',
+		fileContent: data.content,
+		branch: branch
+            }
+	);
+    };
+
+    gitFile.getDiff(gitRepoDir + '/' + reponame, treeish, renderIt);
+});
+
 app.listen(8080);
 console.log('listen to port 8080');
 
