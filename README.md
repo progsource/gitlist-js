@@ -11,8 +11,9 @@ A GitList clone written in Node,js
 
 1. clone the repository
 2. npm install
-3. configure the basePath in /app/configs/repos.json
-4. node app.js
+3. bower install
+4. configure the basePath in /app/configs/repos.json
+5. node app.js
 
 ## License
 
