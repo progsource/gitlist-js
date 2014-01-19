@@ -176,13 +176,33 @@ app.get('/:reponame/blob/:branch/:file', function(req, res) {
 app.get('/:reponame/commits/:branch', function(req, res) {
     init();
     
-    res.render(
-        'index',
-	{
-	    title: 'blub',
-	    repositories: []
-	}
-    );
+    var reponame = req.params.reponame;
+    var branch = req.params.branch;
+
+    var GitLog = require('./app/modules/GitLog.js');
+    var gitLog = new GitLog();
+
+    GitRepo.setCurrentReponame(reponame);
+    GitRepo.init();
+    var branches = GitRepo.getBranches();
+    GitRepo.setCurrentBranch(branch);
+
+    var renderIt = function(data) {
+        res.render(
+            'logView',
+	    {
+	        title: reponame,
+	        reponame: reponame,
+                heads: branches.heads,
+		tags: branches.tags,
+		branch: branch,
+                breadcrumb: data.breadcrumb,
+		commits: data.commits
+	    }
+        );
+    };
+
+    gitLog.getLog(gitRepoDir + '/' + reponame, branch, renderIt);
 });
 
 

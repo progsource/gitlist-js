@@ -1,0 +1,13 @@
+extend repoNavigation
+block append content
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        = 'date'
+    .panel-body
+      each val, index in commits
+        .list-group
+          a(href='#', class='list-group-item')
+            p.list-group-item-text
+              strong= val.msg
+            p.list-group-item-text= val.author + ' authored on ' + val.date
