@@ -6,7 +6,6 @@ var Promise = require('bluebird');
 var GitFile = function() {
     var getBreadcrumb = function(path) {
 	var breadcrumb = path.split('/');
-
 	var breads = {};
 	breadcrumb.forEach(function(bread, index) {
 	    breads[bread] = '';
@@ -17,6 +16,7 @@ var GitFile = function() {
 	        }
 	    }
 	});
+	return breads;
     };
 
     this.getFile = function(path, branch, file, callback) {
