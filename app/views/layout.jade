@@ -12,6 +12,15 @@ html(lang='en')
       block content
     footer
       .container
-        p Running on Node.js with Express and Jade
+        p= 'Running on '
+          a(href='http://nodejs.org', target='_blank')= 'Node.js'
+          = ' with '
+          a(href='http://expressjs.com', target='_blank')= 'Express'
+          = ' and '
+          a(href='http://jade-lang.com', target='_blank')= 'Jade'
+          = ' using '
+          a(href='http://getbootstrap.com', target='_blank')= 'Twitter Bootstrap'
+          = ' with '
+          a(href='http://glyphicons.com', target='_blank')= 'Glyphicons'
     script(src='/scripts/vendor/jquery/jquery.min.js')
     script(src='/scripts/vendor/bootstrap/dist/js/bootstrap.min.js')
