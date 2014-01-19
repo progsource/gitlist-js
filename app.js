@@ -10,11 +10,27 @@ var Promise = require('bluebird');
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
 
-var gitRepoDir = 'C:/repo_git';
+var gitRepoDir = '';
+
+function init() {
+    var configFile = './app/configs/repos.json';
+    try {
+	var config = JSON.parse(fs.readFileSync(configFile, {encode: 'utf-8'}));
+	if (!fs.existsSync(config.basePath)) {
+            throw 'config base path does not exists';
+	    return;
+	}
+	gitRepoDir = config.basePath;
+    } catch (e) {
+	 console.error('config file could not be read: ' + e);
+    }
+}
 
 app.get('/', function(req, res) {
+    init();
+
     var repositories = {};
-    var dir = 'C:/repo_git';
+    var dir = gitRepoDir;
     var folderInDir = fs.readdirSync(dir);
     
     folderInDir.forEach(function(currentDir) {
@@ -37,6 +53,8 @@ app.get('/', function(req, res) {
 app.use(express.static(__dirname + '/app/public'));
 
 app.get('/:reponame', function(req, res) {
+    init();
+
     var reponame = req.params.reponame;
 
     if (!fs.existsSync(gitRepoDir + '/' + reponame)) {
@@ -67,6 +85,7 @@ app.get('/:reponame', function(req, res) {
 });
 
 app.get('/:reponame/:branch', function(req, res) {
+    init();
     var reponame = req.params.reponame;
     var branch = req.params.branch;
 
@@ -93,6 +112,8 @@ app.get('/:reponame/:branch', function(req, res) {
 });
 
 app.get('/:reponame/tree/:branch/:dir', function(req, res) {
+    init();
+
     var reponame = req.params.reponame;
     var branch = req.params.branch;
     var dir = unescape(req.params.dir);
@@ -120,6 +141,8 @@ app.get('/:reponame/tree/:branch/:dir', function(req, res) {
 });
 
 app.get('/:reponame/blob/:branch/:file', function(req, res) {
+    init();
+
     var reponame = req.params.reponame;
     var branch = req.params.branch;
     var file = unescape(req.params.file);
@@ -151,6 +174,8 @@ app.get('/:reponame/blob/:branch/:file', function(req, res) {
 });
 
 app.get('/:reponame/commits/:branch', function(req, res) {
+    init();
+    
     res.render(
         'index',
 	{
