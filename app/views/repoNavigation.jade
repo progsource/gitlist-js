@@ -20,10 +20,18 @@ block content
             li
               a(href='/' + reponame + '/' + val)= val
       ul.nav.nav-tabs
-        li.active
-          a(href='/' + reponame + '/' + branch)= 'Files'
-        li
-          a(href='/' + reponame + '/commits/' + branch)= 'Commits'
+        if ('Files' == activeTab)
+          li.active
+            a(href='/' + reponame + '/' + branch)= 'Files'
+        else
+          li
+            a(href='/' + reponame + '/' + branch)= 'Files'
+        if ('Commits' == activeTab)
+          li.active
+            a(href='/' + reponame + '/commits/' + branch)= 'Commits'
+        else
+          li
+            a(href='/' + reponame + '/commits/' + branch)= 'Commits'
   ol.breadcrumb
     li
       a(href='/' + reponame + '/' + branch)= reponame

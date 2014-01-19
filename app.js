@@ -77,7 +77,8 @@ app.get('/:reponame', function(req, res) {
                 tags: branches.tags,
 	        branch: branch,
                 directoryContents: data.folder,
-		breadcrumb: data.breadcrumb
+		breadcrumb: data.breadcrumb,
+		activeTab: 'Files'
 	    }
         );
     };
@@ -104,7 +105,8 @@ app.get('/:reponame/:branch', function(req, res) {
 	        tags: branches.tags,
 	        branch: branch,
     	        directoryContents: data.folder,
-		breadcrumb: data.breadcrumb
+		breadcrumb: data.breadcrumb,
+		activeTab: 'Files'
 	    }
         );
     };
@@ -133,7 +135,8 @@ app.get('/:reponame/tree/:branch/:dir', function(req, res) {
 		tags: branches.tags,
 		branch: branch,
 		directoryContents: data.folder,
-		breadcrumb: data.breadcrumb
+		breadcrumb: data.breadcrumb,
+		activeTab: 'Files'
 	    }
 	);
     };
@@ -165,7 +168,8 @@ app.get('/:reponame/blob/:branch/:file', function(req, res) {
 		tags: branches.tags,
 		branch: branch,
 		fileContent: data.content,
-		breadcrumb: data.breadcrumb
+		breadcrumb: data.breadcrumb,
+		activeTab: 'Files'
 	    }
 	);
     };
@@ -197,7 +201,8 @@ app.get('/:reponame/commits/:branch', function(req, res) {
 		tags: branches.tags,
 		branch: branch,
                 breadcrumb: data.breadcrumb,
-		commits: data.commits
+		commits: data.commits,
+		activeTab: 'Commits'
 	    }
         );
     };
