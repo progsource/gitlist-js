@@ -1,13 +1,17 @@
 extend repoNavigation
 block append content
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title
-        = 'date'
-    .panel-body
-      each val, index in commits
+  each val, index in commits
+    .panel.panel-default
+      .panel-heading
+        h3.panel-title
+          = index
+      .panel-body
         .list-group
-          a(href='#', class='list-group-item')
-            p.list-group-item-text
-              strong= val.msg
-            p.list-group-item-text= val.author + ' authored on ' + val.date
+          each com, treeish in val
+            .list-group-item
+              p.list-group-item-text
+                strong= com.msg
+              p.list-group-item-text
+                a(href='mailto:' + com.author.email)
+                  = com.author.name
+                = ' authored on ' + com.date
