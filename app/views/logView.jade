@@ -9,7 +9,9 @@ block append content
         .list-group
           each com, treeish in val
             .list-group-item
-              a(href='/' + reponame + '/commit/' + treeish, class='pull-right btn btn-default')= 'View ' + treeish.substr(0,7)
+              a(href='/' + reponame + '/commit/' + treeish, class='pull-right btn btn-default')
+                span.glyphicon.glyphicon-list-alt
+                = ' View ' + treeish.substr(0,7)
               p.list-group-item-text
                 strong= com.msg
               p.list-group-item-text
