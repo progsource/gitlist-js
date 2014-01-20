@@ -13,6 +13,8 @@ A GitList clone written in Node,js
 2. npm install
 3. bower install
 4. configure the basePath in /app/configs/repos.json
+   You need one folder somewhere on your disc in which you have all your Git bare repositories.
+   The complete path to that main folder is your basePath.
 5. node app.js
 
 ## License
