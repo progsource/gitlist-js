@@ -53,37 +53,9 @@ app.get('/:reponame/tree/:branch/:dir', function(req, res) {
 });
 
 app.get('/:reponame/blob/:branch/:file', function(req, res) {
-    init();
-
-    var reponame = req.params.reponame;
-    var branch = req.params.branch;
-    var file = unescape(req.params.file);
-
-    var GitFile = require('./app/modules/GitFile.js');
-    var gitFile = new GitFile();
-
-    GitRepo.setCurrentReponame(reponame);
-    GitRepo.init();
-    var branches = GitRepo.getBranches();
-    GitRepo.setCurrentBranch(branch);
-
-    var renderIt = function(data) {
-	res.render(
-	    'fileView',
-	    {
-		title: reponame,
-		reponame: reponame,
-		heads: branches.heads,
-		tags: branches.tags,
-		branch: branch,
-		fileContent: data.content,
-		breadcrumb: data.breadcrumb,
-		activeTab: 'Files'
-	    }
-	);
-    };
-
-    gitFile.getFile(gitRepoDir + '/' + reponame, branch, file, renderIt);
+    var FileController = require('./app/controller/FileController.js');
+    var fileController = new FileController();
+    fileController.indexAction(req, res);
 });
 
 function showCommits(req, res, page) {
