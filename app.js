@@ -31,39 +31,13 @@ app.get('/', function(req, res) {
     var indexController = new IndexController();
     indexController.indexAction(req, res);
 });
+
 app.use(express.static(__dirname + '/app/public'));
 
 app.get('/:reponame', function(req, res) {
-    init();
-
-    var reponame = req.params.reponame;
-
-    if (!fs.existsSync(gitRepoDir + '/' + reponame)) {
-	res.send(404, 'File/Dir not found');
-	return;
-    }
-
-    GitRepo.setCurrentReponame(reponame);
-    GitRepo.init();
-    var branches = GitRepo.getBranches();
-    var branch = GitRepo.getCurrentBranch();
-    
-    var renderIt = function(data) {
-        res.render(
-            'folderView',
-	    {
-	        title: reponame,
-	        reponame: reponame,
-	        heads: branches.heads,
-                tags: branches.tags,
-	        branch: branch,
-                directoryContents: data.folder,
-		breadcrumb: data.breadcrumb,
-		activeTab: 'Files'
-	    }
-        );
-    };
-    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, '.', renderIt);
+    var FolderController = require('./app/controller/FolderController.js');
+    var folderController = new FolderController();
+    folderController.indexAction(req, res);
 });
 
 app.get('/:reponame/:branch', function(req, res) {
