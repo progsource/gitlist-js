@@ -64,6 +64,15 @@ var FolderController = function() {
 
         renderFolder(req, res, basePath, reponame, branch, '.');
     };
+
+    this.treeAction = function(req, res) {
+        var basePath = getBootstrap().getBasePath();
+	var reponame = req.params.reponame;
+	var branch = req.params.branch;
+	var dataPath = req.params.dir;
+
+        renderFolder(req, res, basePath, reponame, branch, dataPath);
+    };
 };
 
 module.exports = FolderController;
