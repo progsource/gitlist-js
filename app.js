@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var Promise = require('bluebird');
 
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
