@@ -27,28 +27,9 @@ function init() {
 }
 
 app.get('/', function(req, res) {
-    init();
-
-    var repositories = {};
-    var dir = gitRepoDir;
-    var folderInDir = fs.readdirSync(dir);
-    
-    folderInDir.forEach(function(currentDir) {
-        var stats = fs.statSync(dir + '/' + currentDir);
-
-	if (stats && stats.isDirectory()) {
-            var descr = fs.readFileSync(dir + '/' + currentDir + '/description');
-	    repositories[currentDir] = descr;
-	}
-    });
-
-    res.render(
-        'index',
-	{
-	    title: 'repository list',
-	    repos: repositories
-	}
-    );
+    var IndexController = require('./app/controller/IndexController.js');
+    var indexController = new IndexController();
+    indexController.indexAction(req, res);
 });
 app.use(express.static(__dirname + '/app/public'));
 
