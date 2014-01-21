@@ -19,9 +19,11 @@ var FolderController = function() {
 	
 	var branches = gitRepo.getBranches();
 
-	if ('undefined' == typeof branch) {
-            var branch = gitRepo.getCurrentBranch();
-        }
+	if (null === branch) {
+            branch = gitRepo.getCurrentBranch();
+        } else {
+	    gitRepo.setCurrentBranch(branch);
+	}
 
 	var renderIt = function(data) {
 	    res.render(
@@ -31,6 +33,7 @@ var FolderController = function() {
 		    reponame: reponame,
 		    heads: branches.heads,
 		    tags: branches.tags,
+		    branch: branch,
 		    directoryContents: data.folder,
 		    breadcrumb: data.breadcrumb,
 		    activeTab: 'Files'
@@ -51,7 +54,15 @@ var FolderController = function() {
 	    return;
 	}
 
-	renderFolder(req, res, basePath, reponame, undefined, '.');
+	renderFolder(req, res, basePath, reponame, null, '.');
+    };
+
+    this.branchAction = function(req, res) {
+        var basePath = getBootstrap().getBasePath();
+	var reponame = req.params.reponame;
+	var branch = req.params.branch;
+
+        renderFolder(req, res, basePath, reponame, branch, '.');
     };
 };
 

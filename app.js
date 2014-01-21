@@ -41,31 +41,9 @@ app.get('/:reponame', function(req, res) {
 });
 
 app.get('/:reponame/:branch', function(req, res) {
-    init();
-    var reponame = req.params.reponame;
-    var branch = req.params.branch;
-
-    GitRepo.setCurrentReponame(reponame);
-    GitRepo.init();
-    var branches = GitRepo.getBranches();
-    GitRepo.setCurrentBranch(branch);
-    
-    var renderIt = function(data) {
-	res.render(
-            'folderView',
-	    {
-	        title: reponame,
-	        reponame: reponame,
-                heads: branches.heads,
-	        tags: branches.tags,
-	        branch: branch,
-    	        directoryContents: data.folder,
-		breadcrumb: data.breadcrumb,
-		activeTab: 'Files'
-	    }
-        );
-    };
-    gitdata.getFolder(gitRepoDir + '/' + reponame, branch, '.', renderIt);
+    var FolderController = require('./app/controller/FolderController.js');
+    var folderController = new FolderController();
+    folderController.branchAction(req, res);
 });
 
 app.get('/:reponame/tree/:branch/:dir', function(req, res) {
