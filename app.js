@@ -58,48 +58,16 @@ app.get('/:reponame/blob/:branch/:file', function(req, res) {
     fileController.indexAction(req, res);
 });
 
-function showCommits(req, res, page) {
-    init();
-    
-    var reponame = req.params.reponame;
-    var branch = req.params.branch;
-
-    var GitLog = require('./app/modules/GitLog.js');
-    var gitLog = new GitLog();
-
-    GitRepo.setCurrentReponame(reponame);
-    GitRepo.init();
-    var branches = GitRepo.getBranches();
-    GitRepo.setCurrentBranch(branch);
-
-    var renderIt = function(data) {
-        res.render(
-            'logView',
-	    {
-	        title: reponame,
-	        reponame: reponame,
-                heads: branches.heads,
-		tags: branches.tags,
-		branch: branch,
-                breadcrumb: data.breadcrumb,
-		commits: data.commits,
-		activeTab: 'Commits',
-		commitCount: data.commitCount,
-		page: page
-	    }
-        );
-    };
-
-    gitLog.getLog(gitRepoDir + '/' + reponame, branch, page, renderIt);
-}
-
 app.get('/:reponame/commits/:branch', function(req, res) {
-    showCommits(req, res, 0);
+    var CommitsController = require('./app/controller/CommitsController.js');
+    var commitsController = new CommitsController();
+    commitsController.indexAction(req, res);
 });
 
 app.get('/:reponame/commits/:branch/:page', function(req, res) {
-    var page = req.params.page;
-    showCommits(req, res, page);
+    var CommitsController = require('./app/controller/CommitsController.js');
+    var commitsController = new CommitsController();
+    commitsController.indexAction(req, res);
 });
 
 app.get('/:reponame/commit/:treeish', function(req, res) {
