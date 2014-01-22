@@ -1,3 +1,9 @@
+/**
+ * Router handling
+ *
+ * @file
+ * @license MIT
+ */
 var express = require('express');
 var app = express();
 
@@ -54,6 +60,6 @@ app.get('/:reponame/commit/:treeish', function(req, res) {
     commitController.indexAction(req, res);
 });
 
-app.listen(8080);
+app.listen(8070);
 console.log('listen to port 8080');
 
