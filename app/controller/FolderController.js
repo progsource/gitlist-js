@@ -36,6 +36,8 @@ var FolderController = function() {
         var GitData = require(__dirname + '/../modules/GitData.js');
         var gitData = new GitData();
 
+        gitRepo.setBasePath(basePath);
+
         gitRepo.setCurrentReponame(reponame);
         gitRepo.init();
     
