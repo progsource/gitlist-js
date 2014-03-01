@@ -36,6 +36,7 @@ var CommitsController = function() {
         var GitLog = require(__dirname + '/../modules/GitLog.js');
         var gitLog = new GitLog();
 
+        gitRepo.setBasePath(basePath);
         gitRepo.setCurrentReponame(reponame);
         gitRepo.init();
 

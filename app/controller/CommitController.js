@@ -32,6 +32,7 @@ var CommitController = function() {
         var GitFile = require(__dirname + '/../modules/GitFile.js');
         var gitFile = new GitFile();
 
+        gitRepo.setBasePath(basePath);
         gitRepo.setCurrentReponame(reponame);
         gitRepo.init();
 

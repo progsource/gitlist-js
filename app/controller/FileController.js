@@ -38,6 +38,7 @@ var FileController = function() {
         var gitFile = new GitFile();
 
         gitRepo.setCurrentReponame(reponame);
+        gitRepo.setBasePath(basePath);
         gitRepo.init();
     
         var branches = gitRepo.getBranches();
