@@ -13,7 +13,7 @@ block append content
             if (val.contentType != 'blob')
               span.glyphicon.glyphicon-folder-open
               = ' '
-              a(href='/' + reponame + '/tree/' + branch + '/' + index.replace('/', '%2F') + '%2F')= val.contentName
+              a(href='/' + reponame + '/tree/' + branch + '/' + index.replace(/\//g, '%2F') + '%2F')= val.contentName
             else
               span.glyphicon.glyphicon-file
               = ' '

@@ -37,7 +37,6 @@ var FolderController = function() {
         var gitData = new GitData();
 
         gitRepo.setBasePath(basePath);
-
         gitRepo.setCurrentReponame(reponame);
         gitRepo.init();
     
