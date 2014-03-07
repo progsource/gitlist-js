@@ -95,7 +95,10 @@ var GitData = function() {
         breadcrumb = breads;
     })
         .then(gitTreeStringToObject)
-        .then(callback);
+        .then(callback)
+        .error(function(e) {
+            console.log(e.message);
+        });
     };
 };
 
