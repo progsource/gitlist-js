@@ -10,13 +10,16 @@ block append content
       each val, index in directoryContents
         tr
           td
-            if (val.contentType != 'blob')
+            if (val.contentType != 'blob' && val.contentType != 'commit')
               span.glyphicon.glyphicon-folder-open
               = ' '
               a(href='/' + reponame + '/tree/' + branch + '/' + index.replace(/\//g, '%2F') + '%2F')= val.contentName
-            else
+            else if (val.contentType != 'commit')
               span.glyphicon.glyphicon-file
               = ' '
               a(href='/' + reponame + '/blob/' + branch + '/' + index.replace(/\//g, '%2F'))= val.contentName
+            else
+              span.glyphicon.glyphicon-transfer(title=val.contentType)
+              = val.contentName
           td=val.mode
           td=val.fileSize
