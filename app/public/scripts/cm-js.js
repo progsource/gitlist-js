@@ -1,4 +1,4 @@
-var myTextArea = document.querySelector('textarea');
+var myTextArea = document.querySelector('.codeOutput');
 
 var myCodeMirror = CodeMirror(
     CodeMirror(

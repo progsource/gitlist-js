@@ -41,7 +41,7 @@ var CommitController = function() {
 
         var renderIt = function(data) {
             res.render(
-                'fileView',
+                'commitView',
                 {
                     title: reponame,
                     reponame: reponame,

@@ -5,5 +5,5 @@ block append content
     p
       = 'Image: ' + fileContent
   else
-    textarea(data-codemode='#{codemode}')
+    textarea(class='codeOutput', data-codemode='#{codemode}')
       = fileContent
