@@ -16,6 +16,7 @@
   "homepage": "http://progsource.de/gitlist-js",
   "private": true,
   "dependencies": {
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "requirejs-codemirror": "*"
   }
 }

@@ -2,7 +2,7 @@ doctype html
 html(lang='en')
   head
     title #{title} - GitList.js
-    link(rel='stylesheet', href='/scripts/vendor/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/styles/min/style.css')
   body
     .navbar.navbar-scroll-top.navbar-inverse
       .navbar-inner
@@ -22,5 +22,9 @@ html(lang='en')
           a(href='http://getbootstrap.com', target='_blank')= 'Twitter Bootstrap'
           = ' with '
           a(href='http://glyphicons.com', target='_blank')= 'Glyphicons'
-    script(src='/scripts/vendor/jquery/dist/jquery.min.js')
-    script(src='/scripts/vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/scripts/min/jqboot.js')
+    if codemode && codemode != 'image'
+      script(src='/scripts/min/cm.js')
+      if codemode != 'null'
+        script(src='/scripts/vendor/CodeMirror/mode/#{codemode}/#{codemode}.js')
+      script(src='/scripts/cm-js.js')

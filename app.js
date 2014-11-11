@@ -12,13 +12,13 @@ var port = 8070;
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
 
+app.use(express.static(__dirname + '/app/public'));
+
 app.get('/', function(req, res) {
     var IndexController = require('./app/controller/IndexController.js');
     var indexController = new IndexController();
     indexController.indexAction(req, res);
 });
-
-app.use(express.static(__dirname + '/app/public'));
 
 app.get('/:reponame', function(req, res) {
     var FolderController = require('./app/controller/FolderController.js');
@@ -62,6 +62,6 @@ app.get('/:reponame/commit/:treeish', function(req, res) {
     commitController.indexAction(req, res);
 });
 
+
 app.listen(port);
 console.log('listen to port ' + port);
-

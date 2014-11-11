@@ -9,6 +9,8 @@
     "bluebird": "~1.0.0"
   },
   "devDependencies": {
-    "bower": "~1.2.8"
+    "bower": "~1.2.8",
+    "gulp": "~3.8.10",
+    "gulp-concat": "~2.4.1"
   }
 }
