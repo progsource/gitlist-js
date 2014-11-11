@@ -1,0 +1,22 @@
+/* Whether the editor scrolls (overflow: auto + fixed height). By default,
+   it does. Setting the CodeMirror class to have height: auto and giving this
+   class overflow-x: auto; overflow-y: hidden; will cause the editor to resize
+   to fit its content.
+*/
+.CodeMirror {
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.CodeMirror-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Glyphicons paths^*/
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url('/scripts/vendor/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('/scripts/vendor/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/scripts/vendor/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/scripts/vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/scripts/vendor/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
