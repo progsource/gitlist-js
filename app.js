@@ -7,7 +7,7 @@
 var express = require('express');
 var app = express();
 
-var port = 8070;
+var port = 80;
 
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
