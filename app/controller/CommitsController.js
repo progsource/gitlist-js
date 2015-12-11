@@ -72,14 +72,15 @@ var CommitsController = function() {
      * @param {object} res - response object
      */
     this.indexAction = function(req, res) {
-        var basePath = getBootstrap().getBasePath();
-        var reponame = req.params.reponame;
-        var branch = req.params.branch;
+        var basePath = getBootstrap().getBasePath(),
+            reponame = req.params.reponame,
+            branch = req.params.branch,
+            page;
 
         if ('undefined' == typeof req.params.page) {
-            var page = 0;
+            page = 0;
         } else {
-            var page = req.params.page;
+            page = req.params.page;
         }
 
         showCommits(req, res, basePath, reponame, branch, page);

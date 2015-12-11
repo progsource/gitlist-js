@@ -39,7 +39,7 @@ var IndexController = function() {
                 repositories[currentDir] = description;
             }
         });
- 
+
         res.render(
             'index',
             {

@@ -55,7 +55,7 @@ var GitData = function() {
         var lines = data.toString().split('\n');
         var folder = {};
         lines.forEach(function(line) {
-            gitTreeLineToObject(line, folder)
+            gitTreeLineToObject(line, folder);
         });
 
         var tree = {

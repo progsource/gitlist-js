@@ -87,7 +87,7 @@ function GitRepo() {
      * @return {object} heads and tags
      */
     this.getBranches = function() {
-        if (0 == branches.length) {
+        if (0 === branches.length) {
             branches.heads = fs.readdirSync(basePath + '/' + current.reponame + '/refs/heads');
             branches.tags = fs.readdirSync(basePath + '/' + current.reponame + '/refs/tags');
         }
@@ -119,10 +119,10 @@ function GitRepo() {
      */
     this.init = function() {
         initConfiguration();
-        if (0 == basePath.length) {
+        if (0 === basePath.length) {
             console.error('basePath has to be set before initialization');
         }
-        if (0 == current.reponame.length) {
+        if (0 === current.reponame.length) {
             console.error('current reponame has to be set before initialization');
         }
 
@@ -132,7 +132,7 @@ function GitRepo() {
             current.branch = branches.heads[0];
         }
     };
-    
+
     /** @ignore */
     this.getDirectoryContents = function() {
         var revision = fs.readFileSync(basePath + '/' + current.reponame + '/refs/heads/' + current.branch, 'UTF-8');

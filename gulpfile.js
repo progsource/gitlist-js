@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    concat = require('gulp-concat')
+    concat = require('gulp-concat'),
 
     scriptDestination = './app/public/scripts/min',
     styleDestination = './app/public/styles/min';
@@ -30,7 +30,7 @@ gulp.task('style', function() {
     ])
         .pipe(concat('style.css'))
         .pipe(gulp.dest(styleDestination));
-})
+});
 
 gulp.task('default', [
     'jquery-and-bootstrap',
