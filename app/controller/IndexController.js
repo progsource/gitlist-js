@@ -26,10 +26,10 @@ var IndexController = function() {
      * @param {object} res - response object
      */
     this.indexAction = function(req, res) {
-        var fs = require('fs');
-        var repositories = {};
-        var basePath = getBootstrap().getBasePath();
-        var folder = fs.readdirSync(basePath);
+        var fs = require('fs'),
+            repositories = {},
+            basePath = getBootstrap().getBasePath(),
+            folder = fs.readdirSync(basePath);
 
         folder.forEach(function(currentDir) {
             var stats = fs.statSync(basePath + '/' + currentDir);

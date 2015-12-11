@@ -20,17 +20,20 @@ var GitFile = function() {
      * @return {object} breadcrumb
      */
     var getBreadcrumb = function(path) {
-        var breadcrumb = path.split('/');
-        var breads = {};
+        var breadcrumb = path.split('/'),
+            breads = {};
+
         breadcrumb.forEach(function(bread, index) {
             breads[bread] = '';
             var i = 0;
+
             if (breadcrumb.length - 1 != index) {
                 for (;i <= index; i++) {
                     breads[bread] += breadcrumb[i] + '%2F';
                 }
             }
         });
+
         return breads;
     };
 
@@ -44,21 +47,22 @@ var GitFile = function() {
      */
     this.getFile = function(path, branch, file, callback) {
         var prom = new Promise(function(resolve, reject) {
-            var spawn = require('child_process').spawn;
-            var gitFile = spawn('git', ['cat-file', '-p', branch + ':' + file], {cwd: path});
+            var spawn = require('child_process').spawn,
+                gitFile = spawn('git', ['cat-file', '-p', branch + ':' + file], {cwd: path});
+
             gitFile.stdout.on('data', resolve);
             gitFile.stderr.on('data', reject);
         })
-            .then(function(data) {
-                var content = data;
-                breads = getBreadcrumb(file);
+        .then(function(data) {
+            var content = data;
+            breads = getBreadcrumb(file);
 
-                return {
-                    content: content,
-                    breadcrumb: breads
-                };
-            })
-            .then(callback);
+            return {
+                content: content,
+                breadcrumb: breads
+            };
+        })
+        .then(callback);
     };
 
     /**
@@ -71,22 +75,24 @@ var GitFile = function() {
     this.getDiff = function(path, treeish, callback) {
         var breadcrumb = {};
         breadcrumb['Commit ' + treeish] = '';
+
         var prom = new Promise(function(resolve, reject) {
-            var spawn = require('child_process').spawn;
-            var gitDiff = spawn('git', ['log', '-p', treeish], {cwd: path});
+            var spawn = require('child_process').spawn,
+                gitDiff = spawn('git', ['log', '-p', treeish], {cwd: path});
+
             gitDiff.stdout.on('data', resolve);
             gitDiff.stderr.on('data', reject);
         })
-            .then(function(data) {
-                return {
-                    content: data.toString(),
-                    breadcrumb: breadcrumb
-                };
-            })
-            .then(callback)
-            .error(function(e) {
-                console.error(e.toString());
-            });
+        .then(function(data) {
+            return {
+                content: data.toString(),
+                breadcrumb: breadcrumb
+            };
+        })
+        .then(callback)
+        .error(function(e) {
+            console.error(e.toString());
+        });
     };
 };
 

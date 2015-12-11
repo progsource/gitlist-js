@@ -30,11 +30,11 @@ var CommitsController = function() {
      * @param {int} page - page number
      */
     var showCommits = function(req, res, basePath, reponame, branch, page) {
-        var GitRepo = require(__dirname + '/../modules/GitRepo.js');
-        var gitRepo = new GitRepo();
+        var GitRepo = require(__dirname + '/../modules/GitRepo.js'),
+            gitRepo = new GitRepo(),
 
-        var GitLog = require(__dirname + '/../modules/GitLog.js');
-        var gitLog = new GitLog();
+            GitLog = require(__dirname + '/../modules/GitLog.js'),
+            gitLog = new GitLog();
 
         gitRepo.setBasePath(basePath);
         gitRepo.setCurrentReponame(reponame);

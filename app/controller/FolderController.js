@@ -30,16 +30,16 @@ var FolderController = function() {
      * @param {string} dataPath - the deep path too look at
      */
     var renderFolder = function(req, res, basePath, reponame, branch, dataPath) {
-        var GitRepo = require(__dirname + '/../modules/GitRepo.js');
-        var gitRepo = new GitRepo();
+        var GitRepo = require(__dirname + '/../modules/GitRepo.js'),
+            gitRepo = new GitRepo(),
 
-        var GitData = require(__dirname + '/../modules/GitData.js');
-        var gitData = new GitData();
+            GitData = require(__dirname + '/../modules/GitData.js'),
+            gitData = new GitData();
 
         gitRepo.setBasePath(basePath);
         gitRepo.setCurrentReponame(reponame);
         gitRepo.init();
-    
+
         var branches = gitRepo.getBranches();
 
         if (null === branch) {
@@ -74,9 +74,9 @@ var FolderController = function() {
      * @param {object} res - response object
      */
     this.indexAction = function(req, res) {
-        var fs = require('fs');
-        var basePath = getBootstrap().getBasePath();
-        var reponame = req.params.reponame;
+        var fs = require('fs'),
+            basePath = getBootstrap().getBasePath(),
+            reponame = req.params.reponame;
 
         if (!fs.existsSync(basePath + '/' + reponame)) {
             res.send(404, 'File/Dir not found');
@@ -93,9 +93,9 @@ var FolderController = function() {
      * @param {object} res - response object
      */
     this.branchAction = function(req, res) {
-        var basePath = getBootstrap().getBasePath();
-        var reponame = req.params.reponame;
-        var branch = req.params.branch;
+        var basePath = getBootstrap().getBasePath(),
+            reponame = req.params.reponame,
+            branch = req.params.branch;
 
         renderFolder(req, res, basePath, reponame, branch, '.');
     };
@@ -107,10 +107,10 @@ var FolderController = function() {
      * @param {object} res - response object
      */
     this.treeAction = function(req, res) {
-        var basePath = getBootstrap().getBasePath();
-        var reponame = req.params.reponame;
-        var branch = req.params.branch;
-        var dataPath = req.params.dir;
+        var basePath = getBootstrap().getBasePath(),
+            reponame = req.params.reponame,
+            branch = req.params.branch,
+            dataPath = req.params.dir;
 
         renderFolder(req, res, basePath, reponame, branch, dataPath);
     };

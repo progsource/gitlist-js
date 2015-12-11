@@ -29,9 +29,10 @@ var GitData = function() {
      */
     var gitTreeLineToObject = function(line, folderObject) {
         var key = line.split('\t')[1];
+
         if ('undefined' !== typeof key) {
-            var contents = line.split('\t')[0].split(' ');
-            var contentName = key.split('/');
+            var contents = line.split('\t')[0].split(' '),
+                contentName = key.split('/');
             contentName = contentName[contentName.length - 1];
 
             folderObject[key] = {
@@ -41,6 +42,7 @@ var GitData = function() {
                 contentName: contentName
             };
         }
+
         return folderObject;
     };
 
@@ -52,8 +54,9 @@ var GitData = function() {
      * @return {object} breadcrumb and folder
      */
     var gitTreeStringToObject = function(data) {
-        var lines = data.toString().split('\n');
-        var folder = {};
+        var lines = data.toString().split('\n'),
+            folder = {};
+
         lines.forEach(function(line) {
             gitTreeLineToObject(line, folder);
         });
@@ -74,31 +77,31 @@ var GitData = function() {
      * @param{function(data)} callback - callback that is called as soon as the folders are collected
      */
     this.getFolder = function(path, branch, deepPath, callback) {
-        var spawn = require('child_process').spawn;
-        var prom = new Promise(function(resolve, reject) {
-        var gitTree = spawn('git', ['ls-tree', branch, '-l', 'paths', deepPath], {cwd: path});
-        gitTree.stdout.on('data', resolve);
-        gitTree.stderr.on('data', reject);
+        var spawn = require('child_process').spawn,
+            prom = new Promise(function(resolve, reject) {
+                var gitTree = spawn('git', ['ls-tree', branch, '-l', 'paths', deepPath], {cwd: path});
+                gitTree.stdout.on('data', resolve);
+                gitTree.stderr.on('data', reject);
 
-        breadcrumb = deepPath.split('/');
-        breadcrumb.splice(breadcrumb.length - 1, 1);
-        var breads = {};
-        breadcrumb.forEach(function(bread, index) {
-            breads[bread] = '';
-            if (breadcrumb.length - 1 != index) {
-                var i = 0;
-                for (;i <= index; i++) {
-                    breads[bread] += breadcrumb[i] + '%2F';
-                }
-            }
-        });
-        breadcrumb = breads;
-    })
-        .then(gitTreeStringToObject)
-        .then(callback)
-        .error(function(e) {
-            console.log(e.message);
-        });
+                breadcrumb = deepPath.split('/');
+                breadcrumb.splice(breadcrumb.length - 1, 1);
+                var breads = {};
+                breadcrumb.forEach(function(bread, index) {
+                    breads[bread] = '';
+                    if (breadcrumb.length - 1 != index) {
+                        var i = 0;
+                        for (;i <= index; i++) {
+                            breads[bread] += breadcrumb[i] + '%2F';
+                        }
+                    }
+                });
+                breadcrumb = breads;
+            })
+            .then(gitTreeStringToObject)
+            .then(callback)
+            .error(function(e) {
+                console.log(e.message);
+            });
     };
 };
 

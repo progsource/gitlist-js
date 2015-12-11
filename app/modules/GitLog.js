@@ -14,14 +14,14 @@ var GitLog = function() {
      *
      * @type {object}
      */
-    var commits = {};
+    var commits = {},
 
     /**
      * array of months
      *
      * @type {array}
      */
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     /**
      * commit string to object
@@ -32,12 +32,14 @@ var GitLog = function() {
         var history = data.toString('utf-8').split('\n');
         history.forEach(function(logLine, index) {
             if ('commit ' == logLine.substr(0, 'commit '.length)) {
-                var date = history[index + 2].substr(8);
-                var shortDate = new Date(Date.parse(date));
-                var dateTitle = months[shortDate.getMonth()] + ' ' + shortDate.getDate() + ', ' + shortDate.getFullYear();
+                var date = history[index + 2].substr(8),
+                    shortDate = new Date(Date.parse(date)),
+                    dateTitle = months[shortDate.getMonth()] + ' ' + shortDate.getDate() + ', ' + shortDate.getFullYear();
+
                 if ('undefined' == typeof commits[dateTitle]) {
                     commits[dateTitle] = {};
                 }
+
                 commits[dateTitle][logLine.substr(7)] = {
                     author: {
                         name: history[index + 1].substring(8, history[index + 1].indexOf('<') - 1),
@@ -59,11 +61,13 @@ var GitLog = function() {
      * @param {function(data)} callback - function that is called after all data is collected
      */
     this.getLog = function(path, branch, page, callback) {
-        var spawn = require('child_process').spawn;
-        var commitsToSkip = 0;
+        var spawn = require('child_process').spawn,
+            commitsToSkip = 0;
+
         if (0 < page) {
             commitsToSkip = 15 * page;
         }
+
         var gitLog = spawn('git', ['log', '--first-parent', branch, '-n', 15, '--skip=' + commitsToSkip], {cwd: path});
         gitLog.stdout.on('data', commitStringToObject);
         gitLog.on('close', function(code) {

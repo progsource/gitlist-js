@@ -27,8 +27,9 @@ var FileController = function() {
      * @return {string} file ending
      */
     var getFileEnding = function(filename) {
-        var fileMap = filename.split('/');
-        var positionOfLastDot = fileMap[fileMap.length - 1].lastIndexOf('.');
+        var fileMap = filename.split('/'),
+            positionOfLastDot = fileMap[fileMap.length - 1].lastIndexOf('.');
+
         return fileMap[fileMap.length - 1].substr(positionOfLastDot + 1);
     };
 
@@ -96,22 +97,22 @@ var FileController = function() {
      * @param {object} res - response object
      */
     this.indexAction = function(req, res) {
-        var basePath = getBootstrap().getBasePath();
-        var reponame = req.params.reponame;
-        var branch = req.params.branch;
-        var file = req.params.file;
-        var fileMode = getMode(file);
+        var basePath = getBootstrap().getBasePath(),
+            reponame = req.params.reponame,
+            branch = req.params.branch,
+            file = req.params.file,
+            fileMode = getMode(file),
 
-        var GitRepo = require(__dirname + '/../modules/GitRepo.js');
-        var gitRepo = new GitRepo();
+            GitRepo = require(__dirname + '/../modules/GitRepo.js'),
+            gitRepo = new GitRepo(),
 
-        var GitFile = require(__dirname + '/../modules/GitFile.js');
-        var gitFile = new GitFile();
+            GitFile = require(__dirname + '/../modules/GitFile.js'),
+            gitFile = new GitFile();
 
         gitRepo.setCurrentReponame(reponame);
         gitRepo.setBasePath(basePath);
         gitRepo.init();
-    
+
         var branches = gitRepo.getBranches();
 
         gitRepo.setCurrentBranch(branch);

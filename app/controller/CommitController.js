@@ -22,22 +22,22 @@ var CommitController = function() {
      * @param {object} res - response object
      */
     this.indexAction = function(req, res) {
-        var basePath = getBootstrap().getBasePath();
-        var reponame = req.params.reponame;
-        var treeish = req.params.treeish;
+        var basePath = getBootstrap().getBasePath(),
+            reponame = req.params.reponame,
+            treeish = req.params.treeish,
 
-        var GitRepo = require(__dirname + '/../modules/GitRepo.js');
-        var gitRepo = new GitRepo();
+            GitRepo = require(__dirname + '/../modules/GitRepo.js'),
+            gitRepo = new GitRepo(),
 
-        var GitFile = require(__dirname + '/../modules/GitFile.js');
-        var gitFile = new GitFile();
+            GitFile = require(__dirname + '/../modules/GitFile.js'),
+            gitFile = new GitFile();
 
         gitRepo.setBasePath(basePath);
         gitRepo.setCurrentReponame(reponame);
         gitRepo.init();
 
-        var branches = gitRepo.getBranches();
-        var branch = gitRepo.getCurrentBranch();
+        var branches = gitRepo.getBranches(),
+            branch = gitRepo.getCurrentBranch();
 
         var renderIt = function(data) {
             res.render(
